@@ -1,0 +1,21 @@
+#!/bin/sed -f
+
+# fold and annotate uppercase letters
+s/[[:upper:]][[:upper:]][^[:lower:]]*/𐊣\L&𐊼/g
+#    GNU General: 𐊣gnu g𐊼eneral  -->  𐊣gnu𐊼 General
+s/\b\([[:alpha:]]\)𐊼/𐊼\U\1/g
+#    in ROM).:  𐊣rom).𐊼  -->  𐊣rom𐊼 ).
+s/\([^[:alpha:]]\+\)𐊼/𐊼\1/g
+s/[[:upper:]]/𐋇\L&/g
+
+# split and annotate word boundaries
+s/\b/¦/g
+s/¦ ¦/¦/g
+y/¦ / ▁/
+s/^ //
+s/ $//
+s/\b/¦/g
+
+s/¦𐋇/𐋇¦/g
+s/¦𐊣/𐊣¦/g
+s/𐊼¦/¦𐊼/g
