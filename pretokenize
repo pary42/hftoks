@@ -8,14 +8,30 @@ s/\b\([[:alpha:]]\)𐊼/𐊼\U\1/g
 s/\([^[:alpha:]]\+\)𐊼/𐊼\1/g
 s/[[:upper:]]/𐋇\L&/g
 
+# normalize spaces ??
+s/\s\+/ /g
+
 # split and annotate word boundaries
+s/^ \+//
+s/ \+$//
 s/\b/¦/g
 s/¦ ¦/¦/g
 y/¦ / ▁/
+s/\b/¦/g
 s/^ //
 s/ $//
-s/\b/¦/g
 
+# fix wrong tokenization
+s/¦ ् ¦/्/g
+# concatenate numbers (2x because of shared digits)
+s/\([[:digit:]]\)¦ \(.\) ¦\([[:digit:]]\)/\1\2\3/g
+s/\([[:digit:]]\)¦ \(.\) ¦\([[:digit:]]\)/\1\2\3/g
+# concatenate '-' separated words
+s,\([[:alnum:]]\)¦ \([-./]\) ¦\([[:alnum:]]\),\1\2\3,g
+
+
+# swap case folding and token boundaries
 s/¦𐋇/𐋇¦/g
 s/¦𐊣/𐊣¦/g
 s/𐊼¦/¦𐊼/g
+
