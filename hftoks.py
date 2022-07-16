@@ -202,6 +202,10 @@ def best_toks(word, vocab):
     for start in range(len(word)):
         t = vocab
         startseg = scores[start]
+        if startseg.end == -1:
+            startseg.end = start
+            startseg.cnt = 0
+            #print('>>>', start, [i.beg for i in scores], [i.end for i in scores])
         for i in range(start, len(word)):
             t = t.forward(word[i])
             if t is None:
@@ -209,16 +213,22 @@ def best_toks(word, vocab):
             if t.is_final():
                 # possible segment end
                 this = startseg.next(i+1, t.freq)
+                #print(start, i, [ii.beg for ii in scores], [ii.end for ii in scores], this.is_better(scores[i+1]))
                 if this.is_better(scores[i+1]):
                     scores[i+1] = this
                     #print(i, this.beg, this.end)
-
     segments = []
     i = len(word)
     while i > 0:
         s = scores[i]
-        segments.append(word[s.beg:s.end])
-        i = s.beg
+        if s.beg == -1:
+            i = s.end -1
+            while i > 0 and scores[i].beg == -1:
+                i = i -1
+            segments.append('<unk-%s>' % word[i:s.end])
+        else:
+            segments.append(word[s.beg:s.end])
+            i = s.beg
     segments.reverse()
     return segments
 
