@@ -253,6 +253,8 @@ def process_text(word_iter, vocab_size=2000, step_size=100):
             break
         for f,c in topc:
             nextvocab.increment(c, f)
+            for sw in best_toks(c, vocab):
+                nextvocab.increment(sw, -f)
     
         ## ??? filter out low freq items from vocab
         min_added_freq = topc[-1][0]
