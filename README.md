@@ -8,21 +8,21 @@ High Frequency Tokens
 
 First run `pretokenize`:
 
-    pretokneize < PLAIN_TEXT_FILE > PRETOK_TEXT_FILE
+    pretokenize < PLAIN_TEXT_FILE > PRETOK_TEXT_FILE
 
-Then you can lear the vocabulary from pretokenized text. `VOCAB_SIZE`
+Then you can learn the vocabulary from pretokenized text. `VOCAB_SIZE`
 is the (minimal) number of produced subword tokens (defaults to
-3000). `STEP_SIZE` is number of subwords added to the vocabulary in
-each iteration (defautls to 5% of `VACAB_SIZE`).
+3000). `STEP_SIZE` is the number of subwords added to the vocabulary in
+each iteration (defaults to 5% of `VOCAB_SIZE`).
 
     hftoks.py learn PRETOK_TEXT_FILE OUT_VOCAB_FILE [VOCAB_SIZE [STEP_SIZE]]
 
-The you can tokenize pretokenized text:
+Then you can tokenize the pretokenized text:
 
     hftoks.py tokenize VOCAB_FILE < PRETOK_TEXT_FILE > OUT_TOKENS
     cat PLAIN_TEXT | pretokneize | hftoks.py tokenize VOCAB_FILE > TOKENS
 
-Use `detokneize` to get plain text from tokes:
+Use `detokenize` to get plain text from tokens:
 
-    detokneize < TOKENS > PLAIN_TEXT_FILE
+    detokenize < TOKENS > PLAIN_TEXT_FILE
 
