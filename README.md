@@ -20,7 +20,7 @@ each iteration (defaults to 5% of `VOCAB_SIZE`).
 Then you can tokenize the pretokenized text:
 
     hftoks.py tokenize VOCAB_FILE < PRETOK_TEXT_FILE > OUT_TOKENS
-    cat PLAIN_TEXT | pretokneize | hftoks.py tokenize VOCAB_FILE > TOKENS
+    cat PLAIN_TEXT | pretokenize | hftoks.py tokenize VOCAB_FILE > TOKENS
 
 Use `detokenize` to get plain text from tokens:
 
